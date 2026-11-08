@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="cs"><head><meta charset="utf-8">
+<title>v2-pole – fotka 72×72</title>
+<!--
+  Fotka do podpisu v2: čtverec 72×72 CSS px, bez zaoblení, export 2× = 144×144 JPG q85.
+  Používá ji sablony/foto.py, ručně ji neotvírej. Skript sem dosadí cestu ke zdrojové fotce.
+
+  Vstup: čtvercová fotka (min. 600×600), obličej vycentrovaný vodorovně, temeno těsně pod horní
+  hranou, brada ve spodní třetině. Fotka se zvětší na 84 px a posune o -6/-3 px, takže okraje
+  se mírně ořežou.
+
+  Tónování: druhá vrstva téže fotky je odbarvená a lehce ochlazená. Radiální maska ji pustí
+  jen na pozadí. Obličej (elipsa 28×44 px se středem 43/46 px) zůstává v původních barvách.
+  Pozadí tak ladí s šedomodrým bannerem pod fotkou. Když obličej v elipse nesedí, uprav
+  posun obrázku (left/top), ne elipsu.
+-->
+<style>
+html,body{margin:0;background:#fff}
+body{padding:20px}
+#stage{position:relative;width:72px;height:72px;overflow:hidden;background:#D9DADB}
+#stage img{position:absolute;left:-6px;top:-3px;display:block;width:84px;height:84px;filter:saturate(.92) contrast(1.04)}
+#stage img.cool{filter:saturate(.18) contrast(1.04) brightness(1.01) sepia(.06) hue-rotate(185deg);
+  -webkit-mask-image:radial-gradient(ellipse 28px 44px at 43px 46px, transparent 80%, #000 95%);
+          mask-image:radial-gradient(ellipse 28px 44px at 43px 46px, transparent 80%, #000 95%)}
+</style></head><body>
+<div id="stage"><img src="{{SRC}}" alt=""><img class="cool" src="{{SRC}}" alt=""></div>
+<script>window.ready = Promise.all([...document.querySelectorAll('img')].map(i => i.complete ? 1 : new Promise(r => i.onload = r)));</script>
+</body></html>
